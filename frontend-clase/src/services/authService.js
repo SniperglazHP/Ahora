@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://backend-9avm.onrender.com/api';
 
 export const authService = {
     async login(username, password) {
@@ -53,4 +53,4 @@ export const authService = {
     getToken() {
         return localStorage.getItem('token');
     }
-}; 
+};
