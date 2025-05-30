@@ -1,0 +1,189 @@
+.menu-container {
+  min-height: 100vh;
+  width: 100%;
+  background: url('/comidafondo.jpg') center/cover no-repeat fixed;
+  position: relative;
+  padding: 20px 0;
+}
+
+.menu-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(75, 0, 130, 0.8);
+  z-index: 1;
+}
+
+.menu-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #fff;
+}
+
+.menu-content h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.menu-description {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  color: #f0e6ff;
+}
+
+.menu-categories {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.menu-category-btn {
+  padding: 12px 24px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.menu-category-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.menu-category-btn.active {
+  background-color: #8b00ff;
+}
+
+.menu-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.menu-item {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.menu-item:hover {
+  transform: translateY(-10px);
+}
+
+.menu-item-image-container {
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
+}
+
+.menu-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.menu-item:hover .menu-item-image {
+  transform: scale(1.1);
+}
+
+.menu-item-info {
+  padding: 20px;
+  color: #333;
+}
+
+.menu-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.menu-item-header h3 {
+  font-size: 1.4rem;
+  color: #6a0dad;
+  margin: 0;
+}
+
+.menu-item-price {
+  font-weight: bold;
+  color: #6a0dad;
+  font-size: 1.2rem;
+}
+
+.menu-item-description {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.back-button-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #6a0dad;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #8b00ff;
+}
+
+.print-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 15px;
+  transition: background-color 0.3s;
+}
+
+.print-button:hover {
+  background-color: #218838;
+}
+
+@media (max-width: 768px) {
+  .menu-items {
+    grid-template-columns: 1fr;
+  }
+  
+  .menu-content h1 {
+    font-size: 2rem;
+  }
+  
+  .menu-categories {
+    flex-direction: column;
+    align-items: center;
+  }
+}

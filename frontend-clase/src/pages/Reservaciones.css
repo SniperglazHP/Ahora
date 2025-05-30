@@ -1,0 +1,208 @@
+.reservaciones-container {
+  min-height: 100vh;
+  width: 100%;
+  background: url('/comidafondo.jpg') center/cover no-repeat fixed;
+  position: relative;
+  padding: 20px 0;
+}
+
+.reservaciones-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(75, 0, 130, 0.8);
+  z-index: 1;
+}
+
+.reservaciones-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #fff;
+}
+
+.reservaciones-content h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.reservaciones-description {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  color: #f0e6ff;
+}
+
+.reservacion-form-container {
+  display: flex;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+}
+
+.form-image-container {
+  flex: 1;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .form-image-container {
+    display: block;
+  }
+}
+
+.form-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reservacion-form-wrapper {
+  flex: 1;
+  padding: 40px;
+}
+
+.reservacion-form {
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #6a0dad;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #6a0dad;
+  outline: none;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.reservacion-btn {
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.reservacion-btn:hover {
+  background-color: #8b00ff;
+}
+
+.form-disclaimer {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.form-error {
+  background-color: rgba(255, 0, 0, 0.1);
+  color: #c00;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border-left: 4px solid #c00;
+}
+
+.reservacion-confirmada {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  padding: 50px 30px;
+  text-align: center;
+  color: #333;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.confirmacion-icon {
+  background-color: #6a0dad;
+  color: white;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  margin: 0 auto 20px;
+}
+
+.reservacion-confirmada h2 {
+  color: #6a0dad;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.reservacion-confirmada p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.back-button-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.back-button {
+  display: inline-block;
+  background-color: #520b52;
+  color: white !important; /* Forzamos el color blanco */
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  font-weight: normal;
+  border: none;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #c9302c;
+  text-decoration: none;
+  color: white !important;
+}

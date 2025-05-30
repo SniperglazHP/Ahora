@@ -1,0 +1,273 @@
+.eventos-container {
+  min-height: 100vh;
+  width: 100%;
+  background: url('/comidafondo.jpg') center/cover no-repeat fixed;
+  position: relative;
+  padding: 20px 0;
+}
+
+.eventos-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(75, 0, 130, 0.8);
+  z-index: 1;
+}
+
+.eventos-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #fff;
+}
+
+.eventos-content h1 {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.eventos-description {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+  color: #f0e6ff;
+}
+
+.eventos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.evento-card {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  padding: 20px;
+}
+
+.evento-card:hover {
+  transform: translateY(-10px);
+}
+
+.evento-image-container {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.evento-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.evento-card:hover .evento-image {
+  transform: scale(1.1);
+}
+
+.evento-date-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #6a0dad;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.evento-details {
+  padding: 20px;
+  color: #333;
+}
+
+.evento-details h3 {
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+  color: #6a0dad;
+}
+
+.evento-time, .evento-date {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.evento-price {
+  font-weight: bold;
+  color: #6a0dad;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.evento-details-btn {
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.evento-details-btn:hover {
+  background-color: #8b00ff;
+}
+
+.back-button-container {
+  text-align: center;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #6a0dad;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #8b00ff;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-container {
+  background: white;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-image-container {
+  width: 100%;
+  height: 300px;
+}
+
+.modal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-content {
+  padding: 30px;
+  color: #333;
+}
+
+.modal-content h2 {
+  color: #6a0dad;
+  margin-bottom: 15px;
+}
+
+.modal-info {
+  margin-bottom: 20px;
+}
+
+.modal-info p {
+  margin-bottom: 8px;
+}
+
+.modal-description {
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-reserve-btn {
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.modal-reserve-btn:hover {
+  background-color: #8b00ff;
+}
+
+.modal-full-btn {
+  background-color: #999;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .eventos-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-container {
+    max-height: 95vh;
+  }
+  
+  .modal-image-container {
+    height: 200px;
+  }
+  
+  .eventos-content h1 {
+    font-size: 2rem;
+  }
+}
