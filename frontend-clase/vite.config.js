@@ -11,8 +11,9 @@ export default defineConfig({
     host: '0.0.0.0', // Important for Render to bind correctly
     //seems like "all" didnt meant "all" after all
     allowedHosts: [
-      'backend-9avm.onrender.com',
-    
+      'tpw-lavanderia.onrender.com',
+      'nombregenerico.click',
+      '.nombregenerico.click', // allows any subdomain like api.nombregenerico.click
       'localhost',
       '.onrender.com'
     ]
