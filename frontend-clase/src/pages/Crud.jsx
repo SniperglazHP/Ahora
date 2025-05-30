@@ -8,7 +8,7 @@ function Component() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/listar', {
+                const response = await fetch('https://backend-9avm.onrender.com/api/listar', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ function Component() {
     }
     const handleDelete = async (username) => {
         try {
-            const response = await fetch('http://localhost:3000/api/borrar', {
+            const response = await fetch('https://backend-9avm.onrender.com/api/borrar', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

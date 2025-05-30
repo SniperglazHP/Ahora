@@ -1,9 +1,8 @@
 /**
  * Servicio para manejar las interacciones del chatbot con el backend
  */
-import { sendMessage } from '../../services/chatbotService';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://backend-9avm.onrender.com/api';
 
 /**
  * Envía un mensaje al chatbot y recibe una respuesta

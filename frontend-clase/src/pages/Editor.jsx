@@ -25,7 +25,7 @@ function EditarUser() {
   
 }
 try {
-    const response = await fetch('http://localhost:3000/api/editar', {
+    const response = await fetch('https://backend-9avm.onrender.com/api/editar', {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
