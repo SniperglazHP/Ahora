@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Eventos.css';
 
 function Eventos() {
   const [showModal, setShowModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const { user } = useAuth();
   
-  const eventos = [
+  // Estado inicial para el formulario de nuevo evento
+  const initialFormState = {
+    title: '',
+    date: '',
+    time: '',
+    description: '',
+    price: '',
+  };
+  
+  const [formData, setFormData] = useState(initialFormState);
+  
+  // Convertimos eventos a estado para poder modificarlos
+  const [eventos, setEventos] = useState([
     {
       id: 1,
       title: 'Cena de Degustación de Vinos',
@@ -43,7 +58,7 @@ function Eventos() {
       price: '$1,500 por persona',
       available: true
     }
-  ];
+  ]);
 
   const openModal = (event) => {
     setSelectedEvent(event);
@@ -54,12 +69,141 @@ function Eventos() {
     setShowModal(false);
     setSelectedEvent(null);
   };
+  
+  const handleDeleteEvent = (id) => {
+    if(window.confirm('¿Estás seguro que deseas eliminar este evento?')) {
+      setEventos(eventos.filter(evento => evento.id !== id));
+    }
+  };
+  
+  const handleAddFormToggle = () => {
+    setShowAddForm(!showAddForm);
+  };
+  
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+  
+  const handleAddEvent = (e) => {
+    e.preventDefault();
+    
+    // Crear nuevo evento
+    const newEvent = {
+      id: Date.now(), // ID único basado en timestamp
+      ...formData,
+      available: true
+    };
+    
+    // Añadir a la lista de eventos
+    setEventos([...eventos, newEvent]);
+    
+    // Limpiar y cerrar formulario
+    setFormData(initialFormState);
+    setShowAddForm(false);
+  };
+
+  // Determinar si el usuario tiene permisos de administrador
+  const isAdmin = user && user.username === 'admin'; // Simplificado para este ejemplo
 
   return (
     <div className="eventos-container">
       <div className="eventos-content">
         <h1>Eventos Especiales</h1>
         <p className="eventos-description">Descubra y participe en nuestros eventos exclusivos para una experiencia culinaria extraordinaria</p>
+        
+        {/* Botón para agregar eventos (solo visible para admin) */}
+        {isAdmin && (
+          <div className="admin-controls">
+            <button 
+              className="add-event-btn" 
+              onClick={handleAddFormToggle}
+            >
+              {showAddForm ? 'Cancelar' : 'Agregar Nuevo Evento'}
+            </button>
+          </div>
+        )}
+        
+        {/* Formulario para añadir eventos */}
+        {isAdmin && showAddForm && (
+          <div className="add-event-form-container">
+            <form className="add-event-form" onSubmit={handleAddEvent}>
+              <h3>Crear Nuevo Evento</h3>
+              
+              <div className="form-group">
+                <label htmlFor="title">Título del Evento:</label>
+                <input 
+                  type="text" 
+                  id="title" 
+                  name="title" 
+                  value={formData.title} 
+                  onChange={handleFormChange} 
+                  required 
+                />
+              </div>
+              
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="date">Fecha:</label>
+                  <input 
+                    type="text" 
+                    id="date" 
+                    name="date" 
+                    value={formData.date} 
+                    onChange={handleFormChange} 
+                    placeholder="Ej: 15 de Diciembre, 2023"
+                    required 
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="time">Hora:</label>
+                  <input 
+                    type="text" 
+                    id="time" 
+                    name="time" 
+                    value={formData.time} 
+                    onChange={handleFormChange}
+                    placeholder="Ej: 19:00 hrs" 
+                    required 
+                  />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="price">Precio:</label>
+                <input 
+                  type="text" 
+                  id="price" 
+                  name="price" 
+                  value={formData.price} 
+                  onChange={handleFormChange}
+                  placeholder="Ej: $950 por persona" 
+                  required 
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="description">Descripción:</label>
+                <textarea 
+                  id="description" 
+                  name="description" 
+                  value={formData.description} 
+                  onChange={handleFormChange} 
+                  required
+                ></textarea>
+              </div>
+              
+              <div className="form-buttons">
+                <button type="submit" className="submit-event-btn">Guardar Evento</button>
+                <button type="button" className="cancel-btn" onClick={() => setShowAddForm(false)}>Cancelar</button>
+              </div>
+            </form>
+          </div>
+        )}
         
         <div className="eventos-grid">
           {eventos.map(evento => (
@@ -75,6 +219,14 @@ function Eventos() {
                 >
                   Ver Detalles
                 </button>
+                {isAdmin && (
+                  <button 
+                    className="evento-delete-btn" 
+                    onClick={() => handleDeleteEvent(evento.id)}
+                  >
+                    Eliminar Evento
+                  </button>
+                )}
               </div>
             </div>
           ))}
