@@ -1,26 +1,21 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import './Eventos.css';
 
 function Eventos() {
   const [showModal, setShowModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const { user } = useAuth();
-  
-  // Estado inicial para el formulario de nuevo evento
-  const initialFormState = {
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [newEvent, setNewEvent] = useState({
     title: '',
     date: '',
     time: '',
     description: '',
     price: '',
-  };
+    available: true
+  });
   
-  const [formData, setFormData] = useState(initialFormState);
-  
-  // Convertimos eventos a estado para poder modificarlos
+  // Estado inicial de eventos
   const [eventos, setEventos] = useState([
     {
       id: 1,
@@ -69,45 +64,58 @@ function Eventos() {
     setShowModal(false);
     setSelectedEvent(null);
   };
-  
-  const handleDeleteEvent = (id) => {
-    if(window.confirm('¿Estás seguro que deseas eliminar este evento?')) {
-      setEventos(eventos.filter(evento => evento.id !== id));
-    }
-  };
-  
-  const handleAddFormToggle = () => {
-    setShowAddForm(!showAddForm);
-  };
-  
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-  
-  const handleAddEvent = (e) => {
-    e.preventDefault();
-    
-    // Crear nuevo evento
-    const newEvent = {
-      id: Date.now(), // ID único basado en timestamp
-      ...formData,
-      available: true
-    };
-    
-    // Añadir a la lista de eventos
-    setEventos([...eventos, newEvent]);
-    
-    // Limpiar y cerrar formulario
-    setFormData(initialFormState);
-    setShowAddForm(false);
+
+  const openCreateModal = () => {
+    setShowCreateModal(true);
   };
 
-  // Determinar si el usuario tiene permisos de administrador
-  const isAdmin = user && user.username === 'admin'; // Simplificado para este ejemplo
+  const closeCreateModal = () => {
+    setShowCreateModal(false);
+    setNewEvent({
+      title: '',
+      date: '',
+      time: '',
+      description: '',
+      price: '',
+      available: true
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewEvent(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Validación básica
+    if (!newEvent.title || !newEvent.date || !newEvent.time || !newEvent.description || !newEvent.price) {
+      alert('Por favor complete todos los campos obligatorios');
+      return;
+    }
+    
+    // Crear nuevo evento con ID único
+    const newEventWithId = {
+      ...newEvent,
+      id: Date.now() // Usar timestamp como ID único
+    };
+    
+    // Agregar al estado
+    setEventos([...eventos, newEventWithId]);
+    
+    // Cerrar modal y limpiar formulario
+    closeCreateModal();
+  };
+
+  const handleDeleteEvent = (eventId) => {
+    if (window.confirm("¿Está seguro que desea eliminar este evento?")) {
+      setEventos(eventos.filter(evento => evento.id !== eventId));
+    }
+  };
 
   return (
     <div className="eventos-container">
@@ -115,99 +123,24 @@ function Eventos() {
         <h1>Eventos Especiales</h1>
         <p className="eventos-description">Descubra y participe en nuestros eventos exclusivos para una experiencia culinaria extraordinaria</p>
         
-        {/* Botón para agregar eventos (solo visible para admin) */}
-        {isAdmin && (
-          <div className="admin-controls">
-            <button 
-              className="add-event-btn" 
-              onClick={handleAddFormToggle}
-            >
-              {showAddForm ? 'Cancelar' : 'Agregar Nuevo Evento'}
-            </button>
-          </div>
-        )}
-        
-        {/* Formulario para añadir eventos */}
-        {isAdmin && showAddForm && (
-          <div className="add-event-form-container">
-            <form className="add-event-form" onSubmit={handleAddEvent}>
-              <h3>Crear Nuevo Evento</h3>
-              
-              <div className="form-group">
-                <label htmlFor="title">Título del Evento:</label>
-                <input 
-                  type="text" 
-                  id="title" 
-                  name="title" 
-                  value={formData.title} 
-                  onChange={handleFormChange} 
-                  required 
-                />
-              </div>
-              
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="date">Fecha:</label>
-                  <input 
-                    type="text" 
-                    id="date" 
-                    name="date" 
-                    value={formData.date} 
-                    onChange={handleFormChange} 
-                    placeholder="Ej: 15 de Diciembre, 2023"
-                    required 
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label htmlFor="time">Hora:</label>
-                  <input 
-                    type="text" 
-                    id="time" 
-                    name="time" 
-                    value={formData.time} 
-                    onChange={handleFormChange}
-                    placeholder="Ej: 19:00 hrs" 
-                    required 
-                  />
-                </div>
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="price">Precio:</label>
-                <input 
-                  type="text" 
-                  id="price" 
-                  name="price" 
-                  value={formData.price} 
-                  onChange={handleFormChange}
-                  placeholder="Ej: $950 por persona" 
-                  required 
-                />
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="description">Descripción:</label>
-                <textarea 
-                  id="description" 
-                  name="description" 
-                  value={formData.description} 
-                  onChange={handleFormChange} 
-                  required
-                ></textarea>
-              </div>
-              
-              <div className="form-buttons">
-                <button type="submit" className="submit-event-btn">Guardar Evento</button>
-                <button type="button" className="cancel-btn" onClick={() => setShowAddForm(false)}>Cancelar</button>
-              </div>
-            </form>
-          </div>
-        )}
+        <div className="admin-controls">
+          <button className="create-event-btn" onClick={openCreateModal}>
+            Crear Nuevo Evento
+          </button>
+        </div>
         
         <div className="eventos-grid">
           {eventos.map(evento => (
             <div key={evento.id} className="evento-card">
+              <button 
+                className="delete-event-btn" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteEvent(evento.id);
+                }}
+              >
+                ×
+              </button>
               <div className="evento-details">
                 <h3>{evento.title}</h3>
                 <p className="evento-time">{evento.time}</p>
@@ -219,14 +152,6 @@ function Eventos() {
                 >
                   Ver Detalles
                 </button>
-                {isAdmin && (
-                  <button 
-                    className="evento-delete-btn" 
-                    onClick={() => handleDeleteEvent(evento.id)}
-                  >
-                    Eliminar Evento
-                  </button>
-                )}
               </div>
             </div>
           ))}
@@ -258,6 +183,91 @@ function Eventos() {
                   <button className="modal-full-btn" disabled>Evento Completo</button>
                 )}
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Modal para crear nuevo evento */}
+      {showCreateModal && (
+        <div className="modal-overlay" onClick={closeCreateModal}>
+          <div className="modal-container create-event-modal" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeCreateModal}>×</button>
+            <div className="modal-content">
+              <h2>Crear Nuevo Evento</h2>
+              <form onSubmit={handleSubmit} className="create-event-form">
+                <div className="form-group">
+                  <label htmlFor="title">Título*</label>
+                  <input 
+                    type="text" 
+                    id="title" 
+                    name="title" 
+                    value={newEvent.title} 
+                    onChange={handleInputChange}
+                    required 
+                  />
+                </div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="date">Fecha*</label>
+                    <input 
+                      type="text" 
+                      id="date" 
+                      name="date" 
+                      value={newEvent.date} 
+                      onChange={handleInputChange}
+                      placeholder="ej: 15 de Diciembre, 2023"
+                      required 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="time">Hora*</label>
+                    <input 
+                      type="text" 
+                      id="time" 
+                      name="time" 
+                      value={newEvent.time} 
+                      onChange={handleInputChange}
+                      placeholder="ej: 19:00 hrs"
+                      required 
+                    />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">Descripción*</label>
+                  <textarea 
+                    id="description" 
+                    name="description" 
+                    value={newEvent.description} 
+                    onChange={handleInputChange}
+                    required
+                  ></textarea>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="price">Precio*</label>
+                  <input 
+                    type="text" 
+                    id="price" 
+                    name="price" 
+                    value={newEvent.price} 
+                    onChange={handleInputChange}
+                    placeholder="ej: $950 por persona"
+                    required 
+                  />
+                </div>
+                <div className="form-group">
+                  <label>
+                    <input 
+                      type="checkbox" 
+                      name="available" 
+                      checked={newEvent.available} 
+                      onChange={(e) => setNewEvent({...newEvent, available: e.target.checked})}
+                    />
+                    Disponible para reservaciones
+                  </label>
+                </div>
+                <button type="submit" className="modal-reserve-btn">Crear Evento</button>
+              </form>
             </div>
           </div>
         </div>
